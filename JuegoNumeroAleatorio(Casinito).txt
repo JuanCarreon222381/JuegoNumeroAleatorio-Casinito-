@@ -1,0 +1,50 @@
+
+fun main() {
+    println("Bienvenido a este micro casino online")
+    println("-------------------------------------------------------------------------")
+    println("Estas apunto de probar tu suerte contra nosotros")
+    println("Donde muy probablemente ganemos")
+    println("Estas son las Reglas:")
+    println("Deberas ingresar un numero entre el 1 y el 100")
+    println("En caso de que acertes el numero ya habiamos seleccionado ganaras")
+    println("Tendras una cantidad indefinida de intentos")
+    println("-------------------------------------------------------------------------")
+    val numeroSecreto = (1..100).random()
+    var intentos = 0
+    
+    println("¡Adivina el número entre 1 y 100!")
+    
+    do {
+        print("Tu intento: ")
+        val respuesta = validar_numero_de_entrada();
+        intentos++
+        
+        if (respuesta < numeroSecreto) {
+            println("Más alto")
+            println("Intento numero $intentos")
+        } else if (respuesta > numeroSecreto) {
+            println("Más bajo")
+            println("Intento numero $intentos")
+        }
+    } while (respuesta != numeroSecreto)
+    
+    println("¡Correcto! Lo adivinaste en $intentos intentos")
+}
+
+fun validar_numero_de_entrada():Int{
+    var respuesta: String? = null;
+    var respuesta_valida: Int? = null;
+    while (true){
+        respuesta = readlnOrNull();
+        if (respuesta == null){
+            println("No se que intentas hacer, por favor vuelve a intentarlo");
+            continue
+        }
+        respuesta_valida = respuesta.toIntOrNull();
+        if(respuesta_valida == null){
+            println("Eso que introdujiste no lo puedo leer como numero, por favor intenta con los caracteres numericos");
+        }
+        else{
+            return respuesta_valida;
+        }
+}}
