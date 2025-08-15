@@ -1,4 +1,3 @@
-
 fun main() {
     println("Bienvenido a este micro casino online")
     println("-------------------------------------------------------------------------")
@@ -9,42 +8,39 @@ fun main() {
     println("En caso de que acertes el numero ya habiamos seleccionado ganaras")
     println("Tendras una cantidad indefinida de intentos")
     println("-------------------------------------------------------------------------")
+
     val numeroSecreto = (1..100).random()
     var intentos = 0
     
-    println("¡Adivina el número entre 1 y 100!")
-    
     do {
-        print("Tu intento: ")
-        val respuesta = validar_numero_de_entrada();
-        intentos++
+        print("\nIntento #${intentos + 1}: ")
+        val respuesta = validar_numero_de_entrada()
         
-        if (respuesta < numeroSecreto) {
-            println("Más alto")
-            println("Intento numero $intentos")
-        } else if (respuesta > numeroSecreto) {
-            println("Más bajo")
-            println("Intento numero $intentos")
+        when {
+            respuesta < 1 || respuesta > 100 -> println("Por favor ingresa un número entre 1 y 100")
+            respuesta < numeroSecreto -> {
+                println("El número secreto es mayor")
+                intentos++
+            }
+            respuesta > numeroSecreto -> {
+                println("El número secreto es menor")
+                intentos++
+            }
+            else -> {
+                intentos++
+                println("-------------------------------------------------------------------------")
+                println("¡Felicidades! ¡Has adivinado el número en $intentos intentos!")
+                println("-------------------------------------------------------------------------")
+            }
         }
     } while (respuesta != numeroSecreto)
-    
-    println("¡Correcto! Lo adivinaste en $intentos intentos")
 }
 
-fun validar_numero_de_entrada():Int{
-    var respuesta: String? = null;
-    var respuesta_valida: Int? = null;
-    while (true){
-        respuesta = readlnOrNull();
-        if (respuesta == null){
-            println("No se que intentas hacer, por favor vuelve a intentarlo");
-            continue
+fun validar_numero_de_entrada(): Int {
+    while (true) {
+        when (val respuesta = readlnOrNull()?.toIntOrNull()) {
+            null -> println("Entrada inválida. Por favor ingresa un número")
+            else -> return respuesta
         }
-        respuesta_valida = respuesta.toIntOrNull();
-        if(respuesta_valida == null){
-            println("Eso que introdujiste no lo puedo leer como numero, por favor intenta con los caracteres numericos");
-        }
-        else{
-            return respuesta_valida;
-        }
-}}
+    }
+}
